@@ -10,8 +10,12 @@ export function add(numbers: string): number {
       input = customMatch[2];
     }
   
-    return input
-      .split(delimiter)
-      .map(Number)
-      .reduce((sum, num) => sum + num, 0);
+    const nums = input.split(delimiter).map(Number);
+    const negatives = nums.filter(n => n < 0);
+  
+    if (negatives.length)
+      throw new Error(`Negatives not allowed: ${negatives.join(",")}`);
+  
+    return nums.reduce((sum, num) => sum + num, 0);
   }
+  
